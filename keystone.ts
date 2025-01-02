@@ -1,0 +1,2 @@
+// keystone.ts
+export default {};
