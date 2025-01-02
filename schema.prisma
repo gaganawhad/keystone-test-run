@@ -16,3 +16,8 @@ model User {
   name  String @default("")
   email String @unique @default("")
 }
+
+model Article {
+  id    String @id @default(cuid())
+  title String @default("")
+}

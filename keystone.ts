@@ -11,6 +11,12 @@ const lists = {
         email: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
       },
     }),
+    Article: list({
+      access: allowAll,
+      fields: {
+        title: text(),
+      },
+    }),
   }
 
 export default config({
