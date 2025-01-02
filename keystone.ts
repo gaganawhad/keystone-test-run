@@ -16,7 +16,16 @@ const lists = {
       access: allowAll,
       fields: {
         title: text(),
-        author: relationship({ ref: 'User.articles' }),
+        author: relationship({
+          ref: 'User.articles',
+          ui: {
+          displayMode: 'cards',
+          cardFields: ['name', 'email'],
+          inlineEdit: { fields: ['name', 'email'] },
+          linkToItem: true,
+          inlineCreate: { fields: ['name', 'email'] },
+          },
+        },
       },
     }),
   }
