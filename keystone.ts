@@ -1,7 +1,7 @@
 // keystone.ts
 import { config, list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
-import { text } from '@keystone-6/core/fields';
+import { text, relationship } from '@keystone-6/core/fields';
 
 const lists = {
     User: list({
@@ -9,12 +9,14 @@ const lists = {
       fields: {
         name: text({ validation: { isRequired: true } }),
         email: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
+        articles: relationship({ ref: 'Article.author', many: true }),
       },
     }),
     Article: list({
       access: allowAll,
       fields: {
         title: text(),
+        author: relationship({ ref: 'User.articles' }),
       },
     }),
   }

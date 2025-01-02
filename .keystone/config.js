@@ -30,13 +30,15 @@ var lists = {
     access: import_access.allowAll,
     fields: {
       name: (0, import_fields.text)({ validation: { isRequired: true } }),
-      email: (0, import_fields.text)({ validation: { isRequired: true }, isIndexed: "unique" })
+      email: (0, import_fields.text)({ validation: { isRequired: true }, isIndexed: "unique" }),
+      articles: (0, import_fields.relationship)({ ref: "Article.author", many: true })
     }
   }),
   Article: (0, import_core.list)({
     access: import_access.allowAll,
     fields: {
-      title: (0, import_fields.text)()
+      title: (0, import_fields.text)(),
+      author: (0, import_fields.relationship)({ ref: "User.articles" })
     }
   })
 };

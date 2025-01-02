@@ -5,6 +5,8 @@ type User {
   id: ID!
   name: String
   email: String
+  articles(where: ArticleWhereInput! = {}, orderBy: [ArticleOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ArticleWhereUniqueInput): [Article!]
+  articlesCount(where: ArticleWhereInput! = {}): Int
 }
 
 input UserWhereUniqueInput {
@@ -19,6 +21,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  articles: ArticleManyRelationFilter
 }
 
 input IDFilter {
@@ -60,6 +63,12 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input ArticleManyRelationFilter {
+  every: ArticleWhereInput
+  some: ArticleWhereInput
+  none: ArticleWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -74,6 +83,14 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
+  articles: ArticleRelateToManyForUpdateInput
+}
+
+input ArticleRelateToManyForUpdateInput {
+  disconnect: [ArticleWhereUniqueInput!]
+  set: [ArticleWhereUniqueInput!]
+  create: [ArticleCreateInput!]
+  connect: [ArticleWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -84,11 +101,18 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
+  articles: ArticleRelateToManyForCreateInput
+}
+
+input ArticleRelateToManyForCreateInput {
+  create: [ArticleCreateInput!]
+  connect: [ArticleWhereUniqueInput!]
 }
 
 type Article {
   id: ID!
   title: String
+  author: User
 }
 
 input ArticleWhereUniqueInput {
@@ -101,6 +125,7 @@ input ArticleWhereInput {
   NOT: [ArticleWhereInput!]
   id: IDFilter
   title: StringFilter
+  author: UserWhereInput
 }
 
 input ArticleOrderByInput {
@@ -110,6 +135,13 @@ input ArticleOrderByInput {
 
 input ArticleUpdateInput {
   title: String
+  author: UserRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ArticleUpdateArgs {
@@ -119,6 +151,12 @@ input ArticleUpdateArgs {
 
 input ArticleCreateInput {
   title: String
+  author: UserRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """

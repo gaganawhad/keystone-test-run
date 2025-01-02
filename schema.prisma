@@ -12,12 +12,17 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
-  name  String @default("")
-  email String @unique @default("")
+  id       String    @id @default(cuid())
+  name     String    @default("")
+  email    String    @unique @default("")
+  articles Article[] @relation("Article_author")
 }
 
 model Article {
-  id    String @id @default(cuid())
-  title String @default("")
+  id       String  @id @default(cuid())
+  title    String  @default("")
+  author   User?   @relation("Article_author", fields: [authorId], references: [id])
+  authorId String? @map("author")
+
+  @@index([authorId])
 }
