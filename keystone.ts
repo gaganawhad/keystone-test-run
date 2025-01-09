@@ -3,13 +3,7 @@ import { config, list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 import { text } from '@keystone-6/core/fields';
 
-
-export default config({
-  db: {
-    provider: 'sqlite',
-    url: 'file:./keystone.db',
-  },
-  lists: {
+const lists = {
     User: list({
       access: allowAll,
       fields: {
@@ -18,4 +12,11 @@ export default config({
       },
     }),
   }
+
+export default config({
+  db: {
+    provider: 'sqlite',
+    url: 'file:./keystone.db',
+  },
+  lists,
 });
